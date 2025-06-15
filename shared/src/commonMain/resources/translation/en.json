@@ -1,0 +1,10 @@
+{
+  "productTypeBurger":  "Burger",
+  "productTypeSandwich": "Sandwich",
+  "productTypeGrilledSandwich": "Grilled Sandwich",
+  "productTypeKidsMenu": "Kids Menu",
+  "productTypeSalad": "Salad",
+  "productTypeSideOrder": "Side Order",
+  "buy": "Buy!",
+  "placeholder": "Cancel"
+}

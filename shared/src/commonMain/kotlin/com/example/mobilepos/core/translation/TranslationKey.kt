@@ -1,23 +1,33 @@
 package com.example.mobilepos.core.translation
 
-enum class TranslationKey {
-    WELCOME_MESSAGE,
-    BURGER,
-    GRILLED_SANDWICH
+import com.example.mobilepos.domain.model.ProductType
+
+/// Shortcut for getting the localized string for the given TranslationKey
+fun tr(key: TranslationKey): String {
+    return LocalizationManager.getString(key)
 }
 
-object ProductTypeMapper {
-    private val productTypeToTranslationKey = mapOf<ProductType, TranslationKey>(
-        ProductType.BURGER to TranslationKey.BURGER,
-        ProductType.SANDWICH to TranslationKey.SANDWICH,
-        ProductType.GRILLED_SANDWICH to TranslationKey.GRILLED_SANDWICH,
-        ProductType.KIDS_MENU to TranslationKey.KIDS_MENU,
-        ProductType.SALAD to TranslationKey.SALAD,
-        ProductType.SIDE_ORDER to TranslationKey.SIDE_ORDER
-    )
+/// Translation keys for the different languages.
+///
+/// The key values should match the keys in the translation JSON files.
+enum class TranslationKey(val key: String) {
+    PRODUCT_TYPE_BURGER("productTypeBurger"),
+    PRODUCT_TYPE_SANDWICH("productTypeSandwich"),
+    PRODUCT_TYPE_GRILLED_SANDWICH("productTypeGrilledSandwich"),
+    PRODUCT_TYPE_KIDS_MENU("productTypeKidsMenu"),
+    PRODUCT_TYPE_SALAD("productTypeSalad"),
+    PRODUCT_TYPE_SIDE_ORDER("productTypeSideOrder"),
 
-    fun map(productType: ProductType): TranslationKey {
-        return productTypeToTranslationKey[productType]
-            ?: throw IllegalArgumentException("No translation mapping found for ProductType: $productType")
+    BUY("buy");
+
+}
+
+val ProductType.translationKey: TranslationKey
+    get() = when (this) {
+        ProductType.BURGER -> TranslationKey.PRODUCT_TYPE_BURGER
+        ProductType.SANDWICH -> TranslationKey.PRODUCT_TYPE_SANDWICH
+        ProductType.GRILLED_SANDWICH -> TranslationKey.PRODUCT_TYPE_GRILLED_SANDWICH
+        ProductType.KIDS_MENU -> TranslationKey.PRODUCT_TYPE_KIDS_MENU
+        ProductType.SALAD -> TranslationKey.PRODUCT_TYPE_SALAD
+        ProductType.SIDE_ORDER -> TranslationKey.PRODUCT_TYPE_SIDE_ORDER
     }
-}

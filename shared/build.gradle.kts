@@ -30,6 +30,10 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
+            implementation("org.jetbrains.compose.runtime:runtime:1.5.1")
+            implementation("org.jetbrains.compose.foundation:foundation:1.5.1")
+            implementation("org.jetbrains.compose.material:material:1.5.1")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

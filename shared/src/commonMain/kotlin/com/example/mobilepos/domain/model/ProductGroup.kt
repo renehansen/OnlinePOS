@@ -6,7 +6,7 @@ enum class ProductType {
     GRILLED_SANDWICH,
     KIDS_MENU,
     SALAD,
-    SIDE_ORDER
+    SIDE_ORDER;
 }
 
 data class ProductGroup(

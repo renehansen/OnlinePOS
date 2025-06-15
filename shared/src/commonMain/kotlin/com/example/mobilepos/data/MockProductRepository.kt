@@ -98,8 +98,8 @@ class MockProductRepository : ProductRepository {
         sideOrderGroup
     )
 
-    override fun getProductByGroup(group: ProductGroup): List<Product> {
-        return mockProductGroups.find { it.name == group.name }?.products ?: emptyList()
+    override fun getProductsByGroup(group: ProductGroup): List<Product> {
+        return mockProductGroups.find { it.type == group.type }?.products ?: emptyList()
     }
 
     override fun getAllProductGroups(): List<ProductGroup> {
