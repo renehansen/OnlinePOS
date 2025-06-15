@@ -15,42 +15,41 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.mobilepos.core.translation.TranslationKey
 import com.example.mobilepos.core.translation.tr
-import com.example.mobilepos.core.translation.translationKey
 import com.example.mobilepos.core.ui.POSPadding
 import com.example.mobilepos.presentation.viewModel.HomeViewModel
-import androidx.compose.material3.Button
-import androidx.compose.ui.graphics.Color
 
 @Composable
 fun NewHomeScreen(viewModel: HomeViewModel) {
 
-        Row(modifier = Modifier.fillMaxSize()) {
-            ProductGroupsView(viewModel = viewModel)
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-            ) {
-                ProductsView(viewModel = viewModel)
-            }
-
-
-
-            // Cart View
-            Column(
-                modifier = Modifier
-                    .width(300.dp)
-                    .fillMaxHeight()
-            ) {
-                CartView(viewModel = viewModel)
-            }
+    Row(modifier = Modifier.fillMaxSize()) {
+        ProductGroupsView(viewModel = viewModel)
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+        ) {
+            ProductsView(viewModel = viewModel)
         }
+
+
+        // Cart View
+        Column(
+            modifier = Modifier
+                .width(300.dp)
+                .fillMaxHeight()
+        ) {
+            CartView(viewModel = viewModel)
+        }
+    }
 }
 
 
@@ -58,6 +57,9 @@ fun NewHomeScreen(viewModel: HomeViewModel) {
 fun ProductGroupsView(
     viewModel: HomeViewModel
 ) {
+    val selectedProductGroup = viewModel.selectedProductGroup.collectAsState()
+    val productGroups = viewModel.productGroups.collectAsState()
+
     Column(
         modifier = Modifier
             .width(300.dp)
@@ -65,8 +67,12 @@ fun ProductGroupsView(
             .fillMaxHeight()
             .verticalScroll(rememberScrollState())
     ) {
-        viewModel.productGroups.value.forEach { productGroup ->
-            ProductGroupCard(text = productGroup.type.name, backgroundColor = Color.Red) {
+        productGroups.value.forEach { productGroup ->
+            ProductGroupCard(
+                text = productGroup.type.name,
+                backgroundColor = Color.Red,
+                isSelected = productGroup == selectedProductGroup.value,
+            ) {
                 viewModel.selectProductGroup(productGroup)
             }
             Spacer(modifier = Modifier.height(POSPadding.DEFAULT.dp))

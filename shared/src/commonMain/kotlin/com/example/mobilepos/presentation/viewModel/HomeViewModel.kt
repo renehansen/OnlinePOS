@@ -11,6 +11,9 @@ class HomeViewModel(private val productManager: ProductManager) {
     private val _productGroups = MutableStateFlow(productManager.getAllProductGroups())
     val productGroups: StateFlow<List<ProductGroup>> = _productGroups
 
+    private val _selectedProductGroup = MutableStateFlow<ProductGroup?>(null)
+    val selectedProductGroup: StateFlow<ProductGroup?> = _selectedProductGroup
+
     private val _products = MutableStateFlow(emptyList<Product>())
     val products: StateFlow<List<Product>> = _products
 
@@ -18,6 +21,7 @@ class HomeViewModel(private val productManager: ProductManager) {
     val cart: StateFlow<Cart> = _cart
 
     fun selectProductGroup(group: ProductGroup) {
+        _selectedProductGroup.value = group
         _products.value = productManager.getProductByGroup(group)
     }
 
