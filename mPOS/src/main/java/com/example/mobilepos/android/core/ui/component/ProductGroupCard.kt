@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.ui.text.font.FontWeight
 import com.example.mobilepos.core.ui.POSPadding
 
 @Composable
@@ -42,13 +43,16 @@ fun ProductGroupCard(
                     imageVector = Icons.Default.Check,
                     contentDescription = "Checkmark",
                     modifier = Modifier
-                        .size(16.dp)
-                        .padding(end = 4.dp)
+                        .size(POSPadding.LARGE.dp)
+                        .padding(end = POSPadding.SMALL.dp)
                 )
             }
             BasicText(
                 text = text,
                 maxLines = 2,
+                style = androidx.compose.ui.text.TextStyle(
+                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                )
             )
         }
     }
