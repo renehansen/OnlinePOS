@@ -28,6 +28,9 @@ kotlin {
     }
 
     sourceSets {
+        val commonMain by getting {
+            resources.srcDir("shared/commonMain/resources")
+        }
         commonMain.dependencies {
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
             implementation("org.jetbrains.compose.runtime:runtime:1.5.1")

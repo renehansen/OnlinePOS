@@ -26,11 +26,9 @@ import com.example.mobilepos.presentation.viewModel.HomeViewModel
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel) {
-
-    Row(modifier = Modifier.fillMaxSize()) {
-        ProductGroupsView(viewModel = viewModel)
-
-        // Products View
+    Text("Hej med dig!")
+/*    Row(modifier = Modifier.fillMaxSize()) {
+        //ProductGroupsView(viewModel = viewModel)
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -38,6 +36,8 @@ fun HomeScreen(viewModel: HomeViewModel) {
         ) {
             ProductsView(viewModel = viewModel)
         }
+
+
 
         // Cart View
         Column(
@@ -48,8 +48,11 @@ fun HomeScreen(viewModel: HomeViewModel) {
             CartView(viewModel = viewModel)
         }
     }
+
+ */
 }
 
+/*
 @Composable
 fun ProductGroupsView(
     viewModel: HomeViewModel
@@ -89,7 +92,8 @@ fun ProductsView(
         }
     }
 }
-
+*/
+/*
 @Composable
 fun CartView(viewModel: HomeViewModel) {
     val cart = viewModel.cart.value
@@ -115,4 +119,4 @@ fun CartView(viewModel: HomeViewModel) {
         }
     }
 }
-
+*/

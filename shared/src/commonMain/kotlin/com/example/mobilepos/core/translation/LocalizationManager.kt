@@ -12,6 +12,8 @@ enum class Language(val code: String) {
 }
 
 /// Handles localization for the supported languages.
+//FIXME(RHA) - change back to reading files from resources
+/*
 object LocalizationManager {
     /// The current language for localization. Default is English.
     var language = Language.ENGLISH
@@ -26,12 +28,38 @@ object LocalizationManager {
     private
     fun loadTranslations() {
         val resourceName = "translation/${language.code}.json"
-        val resource = this::class.java.getResource(resourceName)?.readText()
+        val resource = LocalizationManager::class.java.getResource(resourceName)?.readText()
+//        val resource = this::class.java.getResource(resourceName)?.readText()
         translations = Json.parseToJsonElement(resource ?: "{}").jsonObject
     }
+
 
     /// Gets the localized string for the given TranslationKey based on the current language.
     fun getString(key: TranslationKey): String {
         return translations[key.key]?.jsonPrimitive?.content ?: key.name
+    }
+}
+
+ */
+
+object LocalizationManager {
+    /// The current language for localization. Default is English.
+    var language = Language.ENGLISH
+
+    val translations = mapOf(
+        "productTypeBurger" to "Burger",
+        "productTypeSandwich" to "Sandwich",
+        "productTypeGrilledSandwich" to "Grilled Sandwich",
+        "productTypeKidsMenu" to "Kids Menu",
+        "productTypeSalad" to "Salad",
+        "productTypeSideOrder" to "Side Order",
+        "buy" to "Buy!",
+        "placeholder" to "Cancel"
+    )
+
+
+    /// Gets the localized string for the given TranslationKey based on the current language.
+    fun getString(key: TranslationKey): String {
+        return translations[key.key] ?: key.name
     }
 }

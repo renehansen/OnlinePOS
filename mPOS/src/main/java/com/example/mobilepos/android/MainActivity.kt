@@ -8,26 +8,26 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.mobilepos.Greeting
+import com.example.mobilepos.presentation.view.HomeScreen
+import com.example.mobilepos.domain.MockProductRepository
+import com.example.mobilepos.domain.ProductManager
+import com.example.mobilepos.presentation.viewModel.HomeViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val homeViewModel = HomeViewModel()
+        val homeViewModel =
+            HomeViewModel(ProductManager(productRepository = MockProductRepository()))
         setContent {
-            HomeView(homeViewModel)
-        //FIXME Replace with actual HomeView
-            /*
+
             MyApplicationTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GreetingView(Greeting().greet())
+                    HomeScreen(homeViewModel)
                 }
             }
-
-             */
         }
     }
 }
@@ -36,6 +36,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-        GreetingView("Hello, Android!")
+        Text("sdf")
     }
 }
