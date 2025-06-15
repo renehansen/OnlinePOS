@@ -1,11 +1,13 @@
-package com.example.mobilepos.presentation.view
+package com.example.mobilepos.android
 
+import ProductGroupCard
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -13,8 +15,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -23,29 +24,14 @@ import com.example.mobilepos.core.translation.tr
 import com.example.mobilepos.core.translation.translationKey
 import com.example.mobilepos.core.ui.POSPadding
 import com.example.mobilepos.presentation.viewModel.HomeViewModel
+import androidx.compose.material3.Button
+import androidx.compose.ui.graphics.Color
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
-    Text(
-        text = "Welcome to the Mobile POS",
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(POSPadding.DEFAULT.dp)
-    )
-
-
-    /*
-        Row(modifier = Modifier.fillMaxSize()) {
-            Text(
-                text = "Welcome to the Mobile POS",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(POSPadding.DEFAULT.dp)
-            )
-            }
+fun NewHomeScreen(viewModel: HomeViewModel) {
 
         Row(modifier = Modifier.fillMaxSize()) {
-            //ProductGroupsView(viewModel = viewModel)
+            ProductGroupsView(viewModel = viewModel)
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -65,27 +51,34 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 CartView(viewModel = viewModel)
             }
         }
-
-     */
 }
 
-/*
+
 @Composable
 fun ProductGroupsView(
     viewModel: HomeViewModel
 ) {
     Column(
         modifier = Modifier
+            .width(300.dp)
+            .padding(POSPadding.DEFAULT.dp)
             .fillMaxHeight()
             .verticalScroll(rememberScrollState())
     ) {
         viewModel.productGroups.value.forEach { productGroup ->
+            ProductGroupCard(text = productGroup.type.name, backgroundColor = Color.Red) {
+                viewModel.selectProductGroup(productGroup)
+            }
+            Spacer(modifier = Modifier.height(POSPadding.DEFAULT.dp))
+            /*
             Button(
                 onClick = { viewModel.selectProductGroup(productGroup) },
                 modifier = Modifier.padding(POSPadding.SMALL.dp)
             ) {
                 Text(tr((productGroup.type.translationKey)))
             }
+
+             */
         }
     }
 }
@@ -104,13 +97,12 @@ fun ProductsView(
                 onClick = { viewModel.addToCart(product) },
                 modifier = Modifier.padding(POSPadding.SMALL.dp)
             ) {
-                Text(product.name)
+                Text(text = product.name)
             }
         }
     }
 }
-*/
-/*
+
 @Composable
 fun CartView(viewModel: HomeViewModel) {
     val cart = viewModel.cart.value
@@ -136,4 +128,4 @@ fun CartView(viewModel: HomeViewModel) {
         }
     }
 }
-*/
+
