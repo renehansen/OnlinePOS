@@ -24,7 +24,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.mobilepos.core.translation.TranslationKey
 import com.example.mobilepos.core.translation.tr
+import com.example.mobilepos.core.translation.translationKey
 import com.example.mobilepos.core.ui.POSPadding
+import com.example.mobilepos.core.ui.color.util.ProductTypeColorMapper
 import com.example.mobilepos.presentation.viewModel.HomeViewModel
 
 @Composable
@@ -62,29 +64,21 @@ fun ProductGroupsView(
 
     Column(
         modifier = Modifier
-            .width(300.dp)
+            .width(200.dp)
             .padding(POSPadding.DEFAULT.dp)
             .fillMaxHeight()
             .verticalScroll(rememberScrollState())
     ) {
         productGroups.value.forEach { productGroup ->
             ProductGroupCard(
-                text = productGroup.type.name,
-                backgroundColor = Color.Red,
+                text = tr(productGroup.type.translationKey),
+                backgroundColor =
+                    Color(ProductTypeColorMapper.getColorForProductType(productGroup.type)),
                 isSelected = productGroup == selectedProductGroup.value,
             ) {
                 viewModel.selectProductGroup(productGroup)
             }
             Spacer(modifier = Modifier.height(POSPadding.DEFAULT.dp))
-            /*
-            Button(
-                onClick = { viewModel.selectProductGroup(productGroup) },
-                modifier = Modifier.padding(POSPadding.SMALL.dp)
-            ) {
-                Text(tr((productGroup.type.translationKey)))
-            }
-
-             */
         }
     }
 }

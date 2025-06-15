@@ -37,6 +37,7 @@ kotlin {
             implementation("org.jetbrains.compose.foundation:foundation:1.5.1")
             implementation("org.jetbrains.compose.material:material:1.5.1")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+            implementation("org.jetbrains.skiko:skiko:0.7.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
