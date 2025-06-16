@@ -1,4 +1,4 @@
-package com.example.mobilepos.core.ui
+package com.example.mobilepos.core.ui.padding
 
 /// Defines legal padding values for the POS application.
 ///

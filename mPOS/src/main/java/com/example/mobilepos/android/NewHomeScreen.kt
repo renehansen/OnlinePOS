@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.example.mobilepos.core.translation.TranslationKey
 import com.example.mobilepos.core.translation.tr
 import com.example.mobilepos.core.translation.translationKey
-import com.example.mobilepos.core.ui.POSPadding
+import com.example.mobilepos.core.ui.padding.POSPadding
 import com.example.mobilepos.core.ui.color.util.ProductTypeColorMapper
 import com.example.mobilepos.presentation.viewModel.HomeViewModel
 

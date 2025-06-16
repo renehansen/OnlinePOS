@@ -17,7 +17,7 @@ import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.ui.text.font.FontWeight
-import com.example.mobilepos.core.ui.POSPadding
+import com.example.mobilepos.core.ui.padding.POSPadding
 
 @Composable
 fun ProductGroupCard(
