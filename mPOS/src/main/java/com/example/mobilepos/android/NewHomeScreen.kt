@@ -1,5 +1,6 @@
 package com.example.mobilepos.android
 
+import ProductCard
 import ProductGroupCard
 import android.util.Log
 import androidx.compose.foundation.layout.Column
@@ -81,16 +82,21 @@ fun ProductsView(
     viewModel: HomeViewModel
 ) {
     val products = viewModel.products.collectAsState()
+    val selectedProductGroup = viewModel.selectedProductGroup.collectAsState()
+    val cardColor = selectedProductGroup.value?.type?.let {
+        Color(ProductTypeColorMapper.getColorForProductType(it))
+    } ?: Color.White
     LazyVerticalGrid(
         columns = GridCells.Fixed(4),
         modifier = Modifier.fillMaxHeight()
     ) {
         items(products.value) { product ->
-            Button(
-                onClick = { viewModel.addToCart(product) },
-                modifier = Modifier.padding(POSPadding.SMALL.dp)
+            ProductCard(
+                product = product,
+                backgroundColor = cardColor
             ) {
-                Text(text = product.name)
+                Log.d("ProductCard", "Clicked on ${product.name}")
+                viewModel.addToCart(product)
             }
         }
     }
