@@ -42,7 +42,9 @@ fun ProductCard(
                 maxLines = 4,
                 overflow = TextOverflow.Ellipsis,
                 style = TextStyle(fontSize = 16.sp),
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(top = POSPadding.MEDIUM.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(

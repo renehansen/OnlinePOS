@@ -4,6 +4,7 @@ import ProductCard
 import ProductGroupCard
 import android.util.Log
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -88,7 +89,16 @@ fun ProductsView(
     } ?: Color.White
     LazyVerticalGrid(
         columns = GridCells.Fixed(4),
-        modifier = Modifier.fillMaxHeight()
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(horizontal = POSPadding.LARGE.dp),
+        contentPadding = PaddingValues(POSPadding.DEFAULT.dp),
+        verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(
+            POSPadding.DEFAULT.dp
+        ),
+        horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(
+            POSPadding.DEFAULT.dp
+        )
     ) {
         items(products.value) { product ->
             ProductCard(
