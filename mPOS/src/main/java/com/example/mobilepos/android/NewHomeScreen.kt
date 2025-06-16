@@ -1,6 +1,7 @@
 package com.example.mobilepos.android
 
 import ProductGroupCard
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,7 +34,7 @@ import com.example.mobilepos.presentation.viewModel.HomeViewModel
 fun NewHomeScreen(viewModel: HomeViewModel) {
 
     Row(modifier = Modifier.fillMaxSize()) {
-        ProductGroupsView(viewModel = viewModel)
+        ProductGroupsView(viewModel)
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -41,16 +42,7 @@ fun NewHomeScreen(viewModel: HomeViewModel) {
         ) {
             ProductsView(viewModel = viewModel)
         }
-
-
-        // Cart View
-        Column(
-            modifier = Modifier
-                .width(300.dp)
-                .fillMaxHeight()
-        ) {
-            CartView(viewModel = viewModel)
-        }
+        CartView(viewModel)
     }
 }
 
@@ -61,10 +53,11 @@ fun ProductGroupsView(
 ) {
     val selectedProductGroup = viewModel.selectedProductGroup.collectAsState()
     val productGroups = viewModel.productGroups.collectAsState()
+    val columnWidth = 200
 
     Column(
         modifier = Modifier
-            .width(200.dp)
+            .width(columnWidth.dp)
             .padding(POSPadding.DEFAULT.dp)
             .fillMaxHeight()
             .verticalScroll(rememberScrollState())
@@ -87,9 +80,9 @@ fun ProductGroupsView(
 fun ProductsView(
     viewModel: HomeViewModel
 ) {
-    val products = viewModel.products
+    val products = viewModel.products.collectAsState()
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(4),
         modifier = Modifier.fillMaxHeight()
     ) {
         items(products.value) { product ->
@@ -105,26 +98,34 @@ fun ProductsView(
 
 @Composable
 fun CartView(viewModel: HomeViewModel) {
-    val cart = viewModel.cart.value
+    val columnWidth = 300
     Column(
         modifier = Modifier
+            .width(columnWidth.dp)
             .fillMaxHeight()
-            .verticalScroll(rememberScrollState())
     ) {
-        cart.getAll().forEach { product ->
-            Text(
-                text = product.name,
-                modifier = Modifier.padding(POSPadding.SMALL.dp)
-            )
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        Button(
-            onClick = { viewModel.buy() },
+
+        val cart = viewModel.cart.value
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(POSPadding.DEFAULT.dp)
+                .fillMaxHeight()
+                .verticalScroll(rememberScrollState())
         ) {
-            Text(tr(TranslationKey.BUY))
+            cart.getAll().forEach { product ->
+                Text(
+                    text = product.name,
+                    modifier = Modifier.padding(POSPadding.SMALL.dp)
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Button(
+                onClick = { viewModel.buy() },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(POSPadding.DEFAULT.dp)
+            ) {
+                Text(tr(TranslationKey.BUY))
+            }
         }
     }
 }
