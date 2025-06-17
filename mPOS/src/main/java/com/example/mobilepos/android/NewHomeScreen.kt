@@ -32,7 +32,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,7 +41,6 @@ import com.example.mobilepos.core.translation.tr
 import com.example.mobilepos.core.translation.translationKey
 import com.example.mobilepos.core.ui.color.util.ProductTypeColorMapper
 import com.example.mobilepos.core.ui.padding.POSPadding
-import com.example.mobilepos.domain.model.Cart
 import com.example.mobilepos.presentation.viewModel.HomeViewModel
 
 @Composable
@@ -178,7 +176,7 @@ private fun CartTopRow(viewModel: HomeViewModel) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Order #${cart.value.orderNumber}",
+            text = "Order no. ${cart.value.orderNumber}",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.weight(1f)
         )
@@ -255,7 +253,7 @@ private fun CartTotalRow(viewModel: HomeViewModel) {
 @Composable
 private fun PayButton(viewModel: HomeViewModel) {
     Button(
-        onClick = { viewModel.buy() },
+        onClick = { viewModel.pay() },
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = POSPadding.SMALL.dp)

@@ -26,19 +26,18 @@ class HomeViewModel(private val productManager: ProductManager) {
     }
 
     fun addToCart(product: Product) {
-        _cart.value = _cart.value.copy(products = _cart.value.getAll() + product)
+        _cart.value = _cart.value.add(product)
     }
 
     fun removeFromCart(product: Product) {
-        _cart.value = _cart.value.copy(products = _cart.value.getAll() - product)
+        _cart.value = _cart.value.remove(product)
     }
 
     fun clearCart() {
         _cart.value = Cart.empty()
     }
 
-    fun buy() {
-        // Logic to handle checkout, e.g., processing payment, clearing cart, etc.
-        _cart.value = Cart.empty()
+    fun pay() {
+        _cart.value = _cart.value.pay()
     }
 }
