@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -39,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.mobilepos.core.translation.tr
 import com.example.mobilepos.core.translation.translationKey
+import com.example.mobilepos.core.ui.color.POSColor
 import com.example.mobilepos.core.ui.color.util.ProductTypeColorMapper
 import com.example.mobilepos.core.ui.padding.POSPadding
 import com.example.mobilepos.presentation.viewModel.HomeViewModel
@@ -256,7 +258,11 @@ private fun PayButton(viewModel: HomeViewModel) {
         onClick = { viewModel.pay() },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = POSPadding.SMALL.dp)
+            .padding(top = POSPadding.SMALL.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(POSColor.MONEY_GREEN),
+            contentColor = Color.White,
+        )
     ) {
         Icon(
             imageVector = Icons.Default.ShoppingCart,

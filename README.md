@@ -11,5 +11,7 @@ A couple of additional things that I would normally ask for clarification about:
 - Should we make the UI adaptive, such that the number of columns displaying the products decrease for small tablet sizes
 - Here, I have used built-in icons from the Material Design library, but I would assume that OnlinePOS has its own icon library, so I would stick to that in a real project in order to avoid inconsistencies in the UI
 
+I have created all UI components inline in the HomeScreen component. Usually, I would expect that allowed UI elements are defined in a component library or a fully fledged design system, in order to avoid that people reinvent components that already exist.
+
 ## Translations
   I have added translations, rather than hardcoding texts, in order to make it easy to support multiple languages
