@@ -2,11 +2,15 @@ package com.example.mobilepos.domain.model
 
 data class Cart(
     val products: List<Product> = emptyList()) {
+    // Order number just placed in the cart for brevity.
+    val orderNumber: Int = nextOrderNumber
 
     companion object {
         fun empty(): Cart {
             return Cart()
         }
+
+        private var nextOrderNumber: Int = 1
     }
 
     fun add(product: Product): Cart {
@@ -27,5 +31,10 @@ data class Cart(
 
     fun totalPrice(): Double {
         return products.sumOf { it.price }
+    }
+
+    fun pay(): Cart {
+        nextOrderNumber++
+        return Cart.empty()
     }
 }

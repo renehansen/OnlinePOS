@@ -3,6 +3,7 @@ package com.example.mobilepos.android
 import ProductCard
 import ProductGroupCard
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -18,10 +19,18 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -37,6 +46,12 @@ fun NewHomeScreen(viewModel: HomeViewModel) {
 
     Row(modifier = Modifier.fillMaxSize()) {
         ProductGroupsView(viewModel)
+        VerticalDivider(
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(1.dp),
+            color = Color.Gray
+        )
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -115,33 +130,102 @@ fun ProductsView(
 @Composable
 fun CartView(viewModel: HomeViewModel) {
     val columnWidth = 300
+    val cart = viewModel.cart.collectAsState()
+    val totalPrice = cart.value.getAll().sumOf { it.price }
+
     Column(
         modifier = Modifier
             .width(columnWidth.dp)
             .fillMaxHeight()
+            .padding(POSPadding.DEFAULT.dp)
     ) {
+        // Top Row: Order Number and Delete All
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Order #${viewModel.cart.value.orderNumber}",
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.alignByBaseline()
+            )
+            Column(
+                horizontalAlignment = Alignment.End
+            ) {
+                IconButton(onClick = { viewModel.cart.value.clear() }) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete all"
+                    )
+                }
+                Text(
+                    text = "Delete all",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+        }
 
-        val cart = viewModel.cart.value
+        Spacer(modifier = Modifier.height(POSPadding.DEFAULT.dp))
+
+        // Middle Section: Scrollable List of Products
         Column(
             modifier = Modifier
                 .fillMaxHeight()
+                .weight(1f)
                 .verticalScroll(rememberScrollState())
         ) {
-            cart.getAll().forEach { product ->
-                Text(
-                    text = product.name,
-                    modifier = Modifier.padding(POSPadding.SMALL.dp)
-                )
+            cart.value.getAll().forEach { product ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = product.name,
+                        modifier = Modifier.alignByBaseline()
+                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "$${product.price}",
+                            modifier = Modifier.alignByBaseline()
+                        )
+                        IconButton(onClick = { viewModel.cart.value.remove(product) }) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "Delete product"
+                            )
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.height(POSPadding.SMALL.dp))
             }
-            Spacer(modifier = Modifier.weight(1f))
-            Button(
-                onClick = { viewModel.buy() },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(POSPadding.DEFAULT.dp)
-            ) {
-                Text(tr(TranslationKey.BUY))
-            }
+        }
+
+        Spacer(modifier = Modifier.height(POSPadding.DEFAULT.dp))
+
+        // Bottom Section: Total Price and Pay Button
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Total: $${totalPrice}",
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+        Button(
+            onClick = { viewModel.buy() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = POSPadding.SMALL.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.ShoppingCart,
+                contentDescription = "Pay"
+            )
+            Spacer(modifier = Modifier.width(POSPadding.SMALL.dp))
+            Text(text = "Pay")
         }
     }
 }
