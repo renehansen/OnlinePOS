@@ -34,11 +34,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.mobilepos.core.translation.TranslationKey
 import com.example.mobilepos.core.translation.tr
 import com.example.mobilepos.core.translation.translationKey
-import com.example.mobilepos.core.ui.padding.POSPadding
 import com.example.mobilepos.core.ui.color.util.ProductTypeColorMapper
+import com.example.mobilepos.core.ui.padding.POSPadding
 import com.example.mobilepos.presentation.viewModel.HomeViewModel
 
 @Composable
@@ -108,10 +107,10 @@ fun ProductsView(
             .fillMaxHeight()
             .padding(horizontal = POSPadding.LARGE.dp),
         contentPadding = PaddingValues(POSPadding.DEFAULT.dp),
-        verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(
+        verticalArrangement = Arrangement.spacedBy(
             POSPadding.DEFAULT.dp
         ),
-        horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(
+        horizontalArrangement = Arrangement.spacedBy(
             POSPadding.DEFAULT.dp
         )
     ) {
@@ -142,12 +141,13 @@ fun CartView(viewModel: HomeViewModel) {
         // Top Row: Order Number and Delete All
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Order #${viewModel.cart.value.orderNumber}",
                 style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.alignByBaseline()
+                modifier = Modifier.weight(1f)
             )
             Column(
                 horizontalAlignment = Alignment.End
@@ -177,18 +177,19 @@ fun CartView(viewModel: HomeViewModel) {
             cart.value.getAll().forEach { product ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = product.name,
-                        modifier = Modifier.alignByBaseline()
+                        modifier = Modifier.weight(1f)
                     )
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = "$${product.price}",
-                            modifier = Modifier.alignByBaseline()
+                            modifier = Modifier.padding(end = POSPadding.SMALL.dp),
                         )
                         IconButton(onClick = { viewModel.cart.value.remove(product) }) {
                             Icon(

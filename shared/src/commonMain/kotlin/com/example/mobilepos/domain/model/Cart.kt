@@ -35,6 +35,6 @@ data class Cart(
 
     fun pay(): Cart {
         nextOrderNumber++
-        return Cart.empty()
+        return empty()
     }
 }
