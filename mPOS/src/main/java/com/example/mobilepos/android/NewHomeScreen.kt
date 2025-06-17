@@ -171,20 +171,21 @@ fun CartView(viewModel: HomeViewModel) {
 
 @Composable
 private fun CartTopRow(viewModel: HomeViewModel) {
+    val cart = viewModel.cart.collectAsState()
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Order #${viewModel.cart.value.orderNumber}",
+            text = "Order #${cart.value.orderNumber}",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.weight(1f)
         )
         Column(
             horizontalAlignment = Alignment.End
         ) {
-            IconButton(onClick = { viewModel.cart.value.clear() }) {
+            IconButton(onClick = { viewModel.clearCart() }) {
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Delete all"

@@ -25,10 +25,6 @@ data class Cart(
         return products
     }
 
-    fun clear(): Cart {
-        return copy(products = emptyList())
-    }
-
     fun totalPrice(): Double {
         return products.sumOf { it.price }
     }
