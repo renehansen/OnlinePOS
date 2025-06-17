@@ -6,6 +6,7 @@ package com.example.mobilepos.core.ui.padding
 /// and should be used instead of hardcoding padding values directly in the UI components.
 class POSPadding {
     companion object {
+        const val EXTRA_SMALL: Float = 2.0f
         const val SMALL: Float = 4.0f
         const val DEFAULT: Float = 8.0f
         const val MEDIUM: Float = 12.0f
