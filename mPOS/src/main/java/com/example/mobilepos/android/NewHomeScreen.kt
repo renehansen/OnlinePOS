@@ -32,6 +32,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +42,7 @@ import com.example.mobilepos.core.translation.tr
 import com.example.mobilepos.core.translation.translationKey
 import com.example.mobilepos.core.ui.color.util.ProductTypeColorMapper
 import com.example.mobilepos.core.ui.padding.POSPadding
+import com.example.mobilepos.domain.model.Cart
 import com.example.mobilepos.presentation.viewModel.HomeViewModel
 
 @Composable
@@ -132,8 +134,6 @@ fun ProductsView(
 @Composable
 fun CartView(viewModel: HomeViewModel) {
     val columnWidth = 300
-    val cart = viewModel.cart.collectAsState()
-    val totalPrice = cart.value.getAll().sumOf { it.price }
 
     Card(
         modifier = Modifier
@@ -148,103 +148,123 @@ fun CartView(viewModel: HomeViewModel) {
                 .fillMaxSize()
                 .padding(POSPadding.DEFAULT.dp)
         ) {
-            // Top Row: Order Number and Delete All
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Order #${viewModel.cart.value.orderNumber}",
-                    style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.weight(1f)
-                )
-                Column(
-                    horizontalAlignment = Alignment.End
-                ) {
-                    IconButton(onClick = { viewModel.cart.value.clear() }) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Delete all"
-                        )
-                    }
-                    Text(
-                        text = "Delete all",
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-
-            }
+            CartTopRow(viewModel)
             CartItemDivider()
             Spacer(modifier = Modifier.height(POSPadding.DEFAULT.dp))
 
-            // Middle Section: Scrollable List of Products
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
                     .weight(1f)
                     .verticalScroll(rememberScrollState())
             ) {
-                cart.value.getAll().forEach { product ->
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = product.name,
-                            modifier = Modifier.weight(1f)
-                        )
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "${product.price}",
-                                modifier = Modifier.padding(end = POSPadding.EXTRA_SMALL.dp),
-                            )
-                            IconButton(onClick = { viewModel.cart.value.remove(product) }) {
-                                Icon(
-                                    imageVector = Icons.Default.Delete,
-                                    contentDescription = "Delete product"
-                                )
-                            }
-                        }
-                    }
-                    CartItemDivider()
-                }
+                CartProductRows(viewModel)
             }
-
             Spacer(modifier = Modifier.height(POSPadding.DEFAULT.dp))
 
-            // Bottom Section: Total Price and Pay Button
             CartItemDivider()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Total",
-                    style = MaterialTheme.typography.headlineSmall
-                )
-                Text(
-                    text = "$totalPrice",
-                    style = MaterialTheme.typography.headlineSmall
+            CartTotalRow(viewModel)
+            PayButton(viewModel)
+        }
+    }
+}
+
+@Composable
+private fun CartTopRow(viewModel: HomeViewModel) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Order #${viewModel.cart.value.orderNumber}",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.weight(1f)
+        )
+        Column(
+            horizontalAlignment = Alignment.End
+        ) {
+            IconButton(onClick = { viewModel.cart.value.clear() }) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete all"
                 )
             }
-            Button(
-                onClick = { viewModel.buy() },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = POSPadding.SMALL.dp)
+            Text(
+                text = "Delete all",
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+
+    }
+}
+
+@Composable
+private fun CartProductRows(viewModel: HomeViewModel) {
+    val cart = viewModel.cart.collectAsState()
+
+    cart.value.getAll().forEach { product ->
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = product.name,
+                modifier = Modifier.weight(1f)
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.Default.ShoppingCart,
-                    contentDescription = "Pay"
+                Text(
+                    text = "${product.price}",
+                    modifier = Modifier.padding(end = POSPadding.EXTRA_SMALL.dp),
                 )
-                Spacer(modifier = Modifier.width(POSPadding.SMALL.dp))
-                Text(text = "Pay")
+                IconButton(onClick = { viewModel.removeFromCart(product) }) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete product"
+                    )
+                }
             }
         }
+        CartItemDivider()
+    }
+}
+
+@Composable
+private fun CartTotalRow(viewModel: HomeViewModel) {
+    val totalPrice = viewModel.cart.collectAsState().value.totalPrice()
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "Total",
+            style = MaterialTheme.typography.headlineSmall
+        )
+        Text(
+            text = "$totalPrice",
+            style = MaterialTheme.typography.headlineSmall
+        )
+    }
+}
+
+@Composable
+private fun PayButton(viewModel: HomeViewModel) {
+    Button(
+        onClick = { viewModel.buy() },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = POSPadding.SMALL.dp)
+    ) {
+        Icon(
+            imageVector = Icons.Default.ShoppingCart,
+            contentDescription = "Pay"
+        )
+        Spacer(modifier = Modifier.width(POSPadding.SMALL.dp))
+        Text(text = "Pay")
     }
 }
 
