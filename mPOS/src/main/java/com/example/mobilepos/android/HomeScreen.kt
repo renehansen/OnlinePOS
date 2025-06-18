@@ -46,7 +46,7 @@ import com.example.mobilepos.core.ui.padding.POSPadding
 import com.example.mobilepos.presentation.viewModel.HomeViewModel
 
 @Composable
-fun NewHomeScreen(viewModel: HomeViewModel) {
+fun HomeScreen(viewModel: HomeViewModel) {
 
     Row(modifier = Modifier.fillMaxSize()) {
         ProductGroupsView(viewModel)

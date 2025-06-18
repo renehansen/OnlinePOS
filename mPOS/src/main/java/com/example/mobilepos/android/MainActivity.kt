@@ -21,22 +21,14 @@ class MainActivity : ComponentActivity() {
             HomeViewModel(ProductManager(productRepository = MockProductRepository()))
         setContent {
 
-            MyApplicationTheme {
+            OnlinePOSTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NewHomeScreen(homeViewModel)
+                    HomeScreen(homeViewModel)
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        Text("sdf")
     }
 }
