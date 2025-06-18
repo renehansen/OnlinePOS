@@ -68,6 +68,6 @@ Translations are implemented to support multiple languages, avoiding hardcoded t
 ---
 
 ## Improvements
-- - Revisit Kotlin Multiplatform implementation for shared UI and translation handling.
+- Revisit Kotlin Multiplatform implementation for shared UI and translation handling.
 - Resolve `MockK` dependency issues to enable mock testing.
 - Clarify UI design details with the designer
