@@ -1,5 +1,10 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
+repositories {
+    google()
+    mavenCentral()
+}
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -32,15 +37,16 @@ kotlin {
             resources.srcDir("shared/commonMain/resources")
         }
         commonMain.dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
-            implementation("org.jetbrains.compose.runtime:runtime:1.5.1")
-            implementation("org.jetbrains.compose.foundation:foundation:1.5.1")
-            implementation("org.jetbrains.compose.material:material:1.5.1")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-            implementation("org.jetbrains.skiko:skiko:0.7.0")
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.runtime)
+            implementation(libs.foundation)
+            implementation(libs.material)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.skiko)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.mockk)
         }
     }
 }

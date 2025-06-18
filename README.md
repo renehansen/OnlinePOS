@@ -1,3 +1,7 @@
+## Cross-platform issue
+I don't have a Windows machine, so I have not been able to test the app on Windows, nor build an exe file.
+
+
 ## UI
 The product groups column and cart have fixed widths, while the products column is design to be responsive by resizing the cards to fit. I have made the assumption that we should stick with four columns of products, but we could also consider an adaptive layout that reduces the number of columns on smaller screens. I have assumed that the padding between the cards remain fixed.
 
@@ -13,5 +17,7 @@ A couple of additional things that I would normally ask for clarification about:
 
 I have created all UI components inline in the HomeScreen component. Usually, I would expect that allowed UI elements are defined in a component library or a fully fledged design system, in order to avoid that people reinvent components that already exist.
 
+## Testing
+Due to build.gradle problems, mockk couldn't be resolved, so the ProductManager tests, where I wanted to mock out the repository (although strictly not needed since it is already a mock repository :D )
 ## Translations
   I have added translations, rather than hardcoding texts, in order to make it easy to support multiple languages

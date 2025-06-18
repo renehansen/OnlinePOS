@@ -11,5 +11,5 @@ enum class ProductType {
 
 data class ProductGroup(
     val type: ProductType,
-    val products: List<Product>
+    val products: List<Product> = emptyList()
 )
