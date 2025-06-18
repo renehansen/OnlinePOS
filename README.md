@@ -33,6 +33,7 @@ I have intentionally been somewhat lax about the details of the UI. Usually, I w
 
 - UI assumptions (e.g., handling overflowing text with fade-out or ellipsis) should be clarified with the designer.
 - For this small project, UI components have just been created inline in the HomeScreen, but ordinarily I would advise to to define custom UI components in order to ensure consistency and prevent duplication of existing components.
+- I noticed just before submitting the app, that the test case stated that the cart rows were supposed to show the quantity next to the product name, but I had not implemented this. This is a minor issue that can be easily fixed.
 
 ---
 
