@@ -1,21 +1,9 @@
 package com.example.mobilepos.core.translation
 
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
-
-/// Defines the supported languages in the application.
-enum class Language(val code: String) {
-    ENGLISH("en"),
-    // Add more languages as needed..
-}
-
+/// Handles localization for the supported languages.
+///
+/// This one is just a quick hack until the right solution (see below) is properly implemented.
 object LocalizationManager {
-    /// The current language for localization. Default is English.
-    var language = Language.ENGLISH
-
-    // Quick hack until the right solution (see below) is properly implemented.
     private val translations = mapOf(
         "productTypeBurger" to "Burger",
         "productTypeSandwich" to "Sandwich",
@@ -23,8 +11,10 @@ object LocalizationManager {
         "productTypeKidsMenu" to "Kids Menu",
         "productTypeSalad" to "Salad",
         "productTypeSideOrder" to "Side Order",
-        "buy" to "Buy!",
-        "placeholder" to "Cancel"
+        "pay" to "Pay",
+        "orderNo" to "Order No.",
+        "deleteAll" to "Delete all",
+        "total" to "Total"
     )
 
 
@@ -36,6 +26,12 @@ object LocalizationManager {
 
 // TODO(RHA): Don't have time to properly implement this right now, but the general idea is to load translations from a JSON file based on the current language.
 /*
+/// Defines the supported languages in the application.
+enum class Language(val code: String) {
+    ENGLISH("en"),
+    // Add more languages as needed..
+}
+
 /// Handles localization for the supported languages.
 object LocalizationManager {
     /// The current language for localization. Default is English.

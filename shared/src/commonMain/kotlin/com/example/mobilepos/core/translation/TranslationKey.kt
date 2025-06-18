@@ -17,8 +17,10 @@ enum class TranslationKey(val key: String) {
     PRODUCT_TYPE_KIDS_MENU("productTypeKidsMenu"),
     PRODUCT_TYPE_SALAD("productTypeSalad"),
     PRODUCT_TYPE_SIDE_ORDER("productTypeSideOrder"),
-
-    BUY("buy");
+    ORDER_NO("orderNo"),
+    DELETE_ALL("deleteAll"),
+    TOTAL("total"),
+    PAY("pay"),
 
 }
 

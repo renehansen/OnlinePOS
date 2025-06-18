@@ -2,7 +2,6 @@ package com.example.mobilepos.android
 
 import ProductCard
 import ProductGroupCard
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.mobilepos.core.translation.TranslationKey
 import com.example.mobilepos.core.translation.tr
 import com.example.mobilepos.core.translation.translationKey
 import com.example.mobilepos.core.ui.color.POSColor
@@ -124,7 +124,6 @@ fun ProductsView(
                 product = product,
                 backgroundColor = cardColor
             ) {
-                Log.d("ProductCard", "Clicked on ${product.name}")
                 viewModel.addToCart(product)
             }
         }
@@ -178,7 +177,11 @@ private fun CartTopRow(viewModel: HomeViewModel) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Order no. ${cart.value.orderNumber}",
+            text = "${
+                tr(
+                    TranslationKey.ORDER_NO
+                )
+            } ${cart.value.orderNumber}",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.weight(1f)
         )
@@ -188,11 +191,11 @@ private fun CartTopRow(viewModel: HomeViewModel) {
             IconButton(onClick = { viewModel.clearCart() }) {
                 Icon(
                     imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete all"
+                    contentDescription = tr(TranslationKey.DELETE_ALL)
                 )
             }
             Text(
-                text = "Delete all",
+                text = tr(TranslationKey.DELETE_ALL),
                 style = MaterialTheme.typography.bodySmall
             )
         }
@@ -224,7 +227,7 @@ private fun CartProductRows(viewModel: HomeViewModel) {
                 IconButton(onClick = { viewModel.removeFromCart(product) }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete product"
+                        contentDescription = null // Probably not needed for our purposes, so wont't bother with adding a translation key for this icon
                     )
                 }
             }
@@ -242,7 +245,7 @@ private fun CartTotalRow(viewModel: HomeViewModel) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Total",
+            text = tr(TranslationKey.TOTAL),
             style = MaterialTheme.typography.headlineSmall
         )
         Text(
@@ -266,10 +269,10 @@ private fun PayButton(viewModel: HomeViewModel) {
     ) {
         Icon(
             imageVector = Icons.Default.ShoppingCart,
-            contentDescription = "Pay"
+            contentDescription = tr(TranslationKey.PAY)
         )
         Spacer(modifier = Modifier.width(POSPadding.SMALL.dp))
-        Text(text = "Pay")
+        Text(text = tr(TranslationKey.PAY))
     }
 }
 
