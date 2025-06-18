@@ -56,7 +56,7 @@ Translations are implemented to support multiple languages, avoiding hardcoded t
 ## Cross-Platform and Hardware Issues
 
 ### Kotlin Multiplatform
-- Shared UI implementation was attempted but abandoned due to time constraints and unfamiliarity with Kotlin Multiplatform.
+- An attempt was made to implement shared UI using Kotlin Multiplatform, but it was abandoned due to time constraints and limited experience with the framework. This led to unresolved build.gradle issues, and the composables were subsequently relocated to the Android-specific folder.
 - The `expect/actual` mechanism for loading translation files was also abandoned.
 
 ### MockK Dependency
